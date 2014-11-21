@@ -1,18 +1,14 @@
-define('Page', function (require, jquery) {
+define('Page', ['Element', 'jquery'], function (Element, jquery) {
 
     function Page (id, url, title) {
         this.id = id;
         this.url = url;
         this.title = title;
-        this.enabled = false;
-
-        this.editableTags = 'p,h1,h2,h3,h4,h5,strong,span,i,li,a,button,td,th';
-        this.editableBorder = '1px dashed #8e0000';
-        this.editableOutline = 'none';
-        this.editableShadow = '1px 1px 3px #b50707';
 
         this.body = $('body').html();
+        this.current = null;
     }
+
     Page.prototype = {
 
         getId: function() {
@@ -22,29 +18,20 @@ define('Page', function (require, jquery) {
         enable: function() {
             var self = this;
 
-            $('body').on('click', self.editableTags, function() {
+            $('body').on('click', '*', function() {
+                // if something is edit mode - turn it off
+                if (self.current) {
+                    self.current.stopEditing();
+                }
+                // create element around html one
+                var el = new Element(this);
+                self.current = el;
 
-                var that = this;
-                setTimeout(function() {
-                    $(that).focus();
-                }, 0);
+                // start editing
+                el.startEditing();
 
-                var border = $(that).css('border');
-                var shadow = $(that).css('box-shadow');
-                var outline = $(that).css('outline');
-
-                $(that).css('border', self.editableBorder);
-                $(that).css('outline', self.editableOutline);
-                $(that).css('box-shadow', self.editableShadow);
-                $(that).prop('contenteditable', 'true');
-
-                $(that).blur(function() {
-
-                    $(that).css('border', border);
-                    $(that).css('outline', outline);
-                    $(that).css('box-shadow', shadow);
-                    $(that).prop('contenteditable', 'false');
-
+                $(this).blur(function() {
+                    el.stopEditing();
                     return false;
                 });
                 return false;
@@ -52,7 +39,11 @@ define('Page', function (require, jquery) {
         },
 
         disable: function() {
-            $('body').off('click', this.editableTags);
+            $('body').off('click', '*');
+        },
+
+        setCurrent: function(element) {
+            this.current = element;
         }
     };
     return Page;

@@ -7,6 +7,7 @@
             App: 'app/App',
             MessageProcessor: 'app/MessageProcessor',
             Log: 'app/util/Log',
+            Element: 'app/Element',
             Page: 'app/Page',
             jquery: 'lib/vendor/jquery/jquery',
             underscore: 'lib/vendor/lodash/dist/lodash'
