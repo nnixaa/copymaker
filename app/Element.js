@@ -9,7 +9,7 @@ define('Element', function (require, jquery) {
         this.shadow = $(this.el).css('box-shadow');
         this.outline = $(this.el).css('outline');
 
-        this.html = $(this.el).html();
+        this.initialHTML = this.currentHTML = this.previousHTML = $(this.el).html();
 
         this.editableBorder = '1px dashed #8e0000';
         this.editableOutline = 'none';
@@ -34,13 +34,16 @@ define('Element', function (require, jquery) {
         },
 
         startEditing: function() {
-            $(this.el).data('cm-editable', true);
+            this.previousHTML = $(this.el).html();
 
+            $(this.el).data('cm-editable', true);
             this.makeEditStyle();
             this.focus();
         },
 
         stopEditing: function() {
+            this.currentHTML = $(this.el).html();
+
             $(this.el).data('cm-editable', false);
             this.revertStyle();
         },
@@ -74,6 +77,10 @@ define('Element', function (require, jquery) {
 
         getId: function() {
             return this.id;
+        },
+
+        revertHtml: function() {
+            $(this.el).html(this.previousHTML);
         }
     };
     return Element;

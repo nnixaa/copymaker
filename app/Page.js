@@ -49,12 +49,18 @@ define('Page', ['Element', 'Log', 'jquery'], function (Element, Log, jquery) {
                 }
                 return false;
             });
-            $(document).keyup(function(e) {
-                //if (e.keyCode == 13) { $('.save').click(); }     // enter
+            $(document).keydown(function(e) {
+                if (e.keyCode == 13) {
+                    self.current.stopEditing();
+                    self.current = null;
+                    return false;
+                }
                 if (e.keyCode == 27) {
                     if (self.current) {
+                        self.current.revertHtml();
                         self.current.stopEditing();
                         self.current = null;
+                        return false;
                     }
                 }
             });
