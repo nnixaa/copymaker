@@ -34,7 +34,6 @@ var AppGlobal = {
         var self = this;
 
         chrome.tabs.onActivated.addListener(function (activeInfo) {
-            console.log('onActivated');
             self.changeIconToReal(activeInfo.tabId);
         });
     },
@@ -43,7 +42,6 @@ var AppGlobal = {
         var self = this;
 
         chrome.tabs.onUpdated.addListener(function (tabId, activeInfo, tab) {
-            console.log('onUpdated');
             self.disableTab(tab);
             self.changeIconToReal(tab.id);
         });
