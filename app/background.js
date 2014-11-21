@@ -19,6 +19,7 @@ var AppGlobal = {
     start: function() {
         this.addOnClick();
         this.addOnTabChange();
+        this.addOnTabUpdated();
     },
 
     addOnClick: function() {
@@ -33,7 +34,18 @@ var AppGlobal = {
         var self = this;
 
         chrome.tabs.onActivated.addListener(function (activeInfo) {
+            console.log('onActivated');
             self.changeIconToReal(activeInfo.tabId);
+        });
+    },
+
+    addOnTabUpdated: function() {
+        var self = this;
+
+        chrome.tabs.onUpdated.addListener(function (tabId, activeInfo, tab) {
+            console.log('onUpdated');
+            self.disableTab(tab);
+            self.changeIconToReal(tab.id);
         });
     },
 
