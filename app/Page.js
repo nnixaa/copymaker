@@ -1,4 +1,4 @@
-define('Page', ['Element', 'Log', 'jquery'], function (Element, Log, jquery) {
+define('Page', ['Element', 'Log', 'jquery', 'underscore'], function (Element, Log, jquery, _) {
 
     function Page (id, url, title) {
         this.id = id;
@@ -7,12 +7,21 @@ define('Page', ['Element', 'Log', 'jquery'], function (Element, Log, jquery) {
 
         this.body = $('body').html();
         this.current = null;
+        this.elements = [];
     }
 
     Page.prototype = {
 
         getId: function() {
             return this.id;
+        },
+
+        collectElement: function(el) {
+            this.elements[el.id] = el;
+        },
+
+        hasElements: function() {
+            return Object.keys(this.elements).length;
         },
 
         enable: function() {
@@ -35,13 +44,16 @@ define('Page', ['Element', 'Log', 'jquery'], function (Element, Log, jquery) {
                 } else {
 
                     if (el.isEditable()) {
-                        Log.debug('case three');
+
                         self.current = el;
                         el.startEditing();
                         el.focus();
                         $(this).blur(function() {
                             Log.debug('case four');
                             el.stopEditing();
+                            if (el.hasChangedHtml()) {
+                                self.collectElement(el);
+                            }
                             self.current = null;
                             return false;
                         });
@@ -67,7 +79,9 @@ define('Page', ['Element', 'Log', 'jquery'], function (Element, Log, jquery) {
                 }
             });
             $(window).bind('beforeunload', function(){
-                return 'You are in Editing Mode currently.';
+                if (self.hasElements()) {
+                    return 'You are in Editing Mode currently.';
+                }
             });
         },
 

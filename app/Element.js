@@ -81,6 +81,10 @@ define('Element', function (require, jquery) {
 
         revertHtml: function() {
             $(this.el).html(this.previousHTML);
+        },
+
+        hasChangedHtml: function() {
+           return this.currentHTML != this.previousHTML;
         }
     };
     return Element;
