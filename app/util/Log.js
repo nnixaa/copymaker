@@ -1,4 +1,4 @@
-define('Log', function (require, jquery, _) {
+define('Log', function () {
 
     return {
         status: false,

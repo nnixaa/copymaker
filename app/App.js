@@ -7,6 +7,14 @@ define('App', ['Page', 'Log'], function (Page, Log) {
 
     run: function () {
       Log.debug('version = ', this.VERSION);
+    },
+
+    startOnTab: function() {
+      Log.debug('start yeah!');
+    },
+
+    stopOnTab: function() {
+      Log.debug('stop yeah!');
     }
   };
 

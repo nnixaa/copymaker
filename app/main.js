@@ -5,6 +5,7 @@
 
         paths: {
             App: 'app/App',
+            MessageProcessor: 'app/MessageProcessor',
             Log: 'app/util/Log',
             Page: 'app/Page',
             jquery: 'lib/vendor/jquery/jquery',
@@ -18,10 +19,13 @@
     });
 })();
 
-require(['App', 'Log', 'jquery'], function(App, Log, $) {
+require(['App', 'Log', 'MessageProcessor', 'jquery'], function(App, Log, MessageProcessor, $) {
 
     Log.on();
     Log.debug('Page loaded');
 
     App.run();
+
+    MessageProcessor.create(App);
+
 });
