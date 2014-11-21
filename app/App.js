@@ -4,17 +4,26 @@ define('App', ['Page', 'Log'], function (Page, Log) {
     VERSION: '0.1',
 
     enabled: false,
+    page: false,
 
     run: function () {
       Log.debug('version = ', this.VERSION);
     },
 
-    startOnTab: function() {
-      Log.debug('start yeah!');
+    startOnTab: function(msg) {
+      var page = this.getPageOrCreate(msg.tab);
+      page.enable();
     },
 
-    stopOnTab: function() {
-      Log.debug('stop yeah!');
+    stopOnTab: function(msg) {
+      var page = this.getPageOrCreate(msg.tab);
+      page.disable();
+    },
+
+    getPageOrCreate: function(tab) {
+      if (this.page) return this.page;
+
+      return this.page = new Page(tab.id, tab.url, tab.title);
     }
   };
 
