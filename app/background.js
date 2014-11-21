@@ -14,15 +14,40 @@ var MessageProcessor = {
 
 var AppGlobal = {
 
+    tabEnabled: {},
+
     start: function() {
         this.addOnClick();
     },
 
     addOnClick: function() {
+        var self = this;
+
         chrome.browserAction.onClicked.addListener(function (tab) {
-            chrome.browserAction.setIcon({path: 'img/icon_a.png'});
-            MessageProcessor.sendToActiveTab('CM_TURN_ON', {tab: tab, method: 'startOnTab'});
+            self.enableDisableTab(tab);
         });
+    },
+
+    enableDisableTab: function(tab) {
+        if (this.tabEnabled[tab.id]) {
+            this.disableTab(tab)
+        } else {
+            this.enableTab(tab)
+        }
+    },
+
+    enableTab: function(tab) {
+        this.tabEnabled[tab.id] = true;
+        MessageProcessor.sendToActiveTab('CM_TURN_ON', {tab: tab, method: 'startOnTab'});
+
+        chrome.browserAction.setIcon({path: 'img/icon_a.png'});
+    },
+
+    disableTab: function(tab) {
+        this.tabEnabled[tab.id] = false;
+        MessageProcessor.sendToActiveTab('CM_TURN_OFF', {tab: tab, method: 'stopOnTab'});
+
+        chrome.browserAction.setIcon({path: 'img/icon.png'});
     }
 };
 
