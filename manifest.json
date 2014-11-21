@@ -1,12 +1,24 @@
 {
+  "manifest_version": 2,
+
   "name": "Demo for content script with require.js",
   "version": "0.0",
   "description": "This is demonstration for how to use require.js in content scripts",
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "permissions": [ "<all_urls>" ],
+  "web_accessible_resources": [ "app/*",  "lib/*", "html/*", "css/*", "images/*" ],
+  "content_security_policy": "script-src 'self'; object-src 'self'",
 
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["lib/require.js", "lib/require-cs.js", "app/main.js"]
+      "js": [
+        "lib/vendor/requirejs/require.js",
+        "lib/require-cs.js",
+        "app/main.js"
+      ]
     }
   ]
 }

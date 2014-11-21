@@ -1,0 +1,12 @@
+{
+    "name": "copymaker",
+    "version": "0.1",
+    "ignore": [
+        "**/.*"
+    ],
+    "dependencies": {
+        "lodash": "~2.2.0",
+        "requirejs": "2.1.8",
+        "jquery": "1.10.2"
+    }
+}
