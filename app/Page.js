@@ -50,24 +50,30 @@ define('Page', ['Element', 'Log', 'jquery'], function (Element, Log, jquery) {
                 return false;
             });
             $(document).keydown(function(e) {
-                if (e.keyCode == 13) {
-                    self.current.stopEditing();
-                    self.current = null;
-                    return false;
-                }
-                if (e.keyCode == 27) {
-                    if (self.current) {
-                        self.current.revertHtml();
+                if (self.current) {
+                    if (e.keyCode == 13) {
                         self.current.stopEditing();
                         self.current = null;
                         return false;
                     }
+                    if (e.keyCode == 27) {
+                        if (self.current) {
+                            self.current.revertHtml();
+                            self.current.stopEditing();
+                            self.current = null;
+                            return false;
+                        }
+                    }
                 }
+            });
+            $(window).bind('beforeunload', function(){
+                return 'You are in Editing Mode currently.';
             });
         },
 
         disable: function() {
             $('body').off('click', '*');
+            $(window).unbind('beforeunload');
         },
 
         setCurrent: function(element) {
