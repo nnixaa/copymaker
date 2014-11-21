@@ -29,6 +29,10 @@ define('Element', function (require, jquery) {
 
     Element.prototype = {
 
+        isEditable: function() {
+            return $(this.el).text().length > 0;
+        },
+
         startEditing: function() {
             $(this.el).data('cm-editable', true);
 
@@ -62,9 +66,14 @@ define('Element', function (require, jquery) {
         },
 
         focus: function() {
+            var self = this;
             setTimeout(function() {
-                $(this.el).focus();
+                $(self.el).focus();
             }, 0);
+        },
+
+        getId: function() {
+            return this.id;
         }
     };
     return Element;
