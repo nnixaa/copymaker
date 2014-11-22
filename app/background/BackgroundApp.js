@@ -114,6 +114,7 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
     },
 
     changeTabBadgeNumber: function(count) {
+      count = count == 0 ? "" : count;
       chrome.browserAction.setBadgeText({text: count + ""});
     }
 
