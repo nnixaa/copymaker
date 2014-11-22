@@ -1,4 +1,4 @@
-define('Page', ['Element', 'Log', 'jquery', 'underscore'], function (Element, Log, $, _) {
+define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore'], function (Element, MessageProcessor, Log, $, _) {
 
     function Page (id, url, title) {
         this.id = id;
@@ -8,6 +8,8 @@ define('Page', ['Element', 'Log', 'jquery', 'underscore'], function (Element, Lo
         this.body = $('body').html();
         this.current = null;
         this.elements = [];
+
+        this.messageProcessor = new MessageProcessor();
     }
 
     Page.prototype = {
@@ -18,6 +20,8 @@ define('Page', ['Element', 'Log', 'jquery', 'underscore'], function (Element, Lo
 
         collectElement: function(el) {
             this.elements[el.id] = el;
+
+            this.messageProcessor.sendToRuntime('CM_UPDATE_BADGE', {count: this.countCollectedElements(), method: 'updateTabBadge'});
         },
 
         countCollectedElements: function() {
@@ -34,8 +38,6 @@ define('Page', ['Element', 'Log', 'jquery', 'underscore'], function (Element, Lo
             self.addOnClick();
             self.addKeyEvent();
             self.addBeforeUnload();
-
-
         },
 
         addBeforeUnload: function() {
