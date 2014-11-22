@@ -18,7 +18,7 @@
     });
 })();
 
-require(['BackgroundApp', 'Log', 'MessageProcessor'], function(BackgroundApp, Log, MessageProcessor) {
+require(['BackgroundApp', 'Log'], function(BackgroundApp, Log) {
 
     Log.on();
     Log.debug('BackgroundApp loaded');

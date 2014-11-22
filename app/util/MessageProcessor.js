@@ -1,14 +1,12 @@
 define('MessageProcessor', ['Log'], function (Log) {
 
-    var MessageProcessor = {
+    function MessageProcessor (app) {
+        this.app = app;
 
-        app: null,
+        this.listen();
+    }
 
-        create: function(app) {
-            this.app = app;
-
-            this.listen();
-        },
+    MessageProcessor.prototype = {
 
         listen: function () {
             var self = this;

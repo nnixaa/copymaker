@@ -6,10 +6,14 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
     enabled: false,
     page: false,
 
+    messageProcessor: false,
+
     tabEnabled: {},
 
     run: function() {
       Log.debug('BackgroundApp version = ', this.VERSION);
+
+      this.messageProcessor = new MessageProcessor(this);
 
       this.addOnClick();
       this.addOnTabChange();
@@ -64,12 +68,12 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
 
     enableTab: function(tab) {
       this.tabEnabled[tab.id] = true;
-      MessageProcessor.sendToActiveTab('CM_TURN_ON', {tab: tab, method: 'startOnTab'});
+      this.messageProcessor.sendToActiveTab('CM_TURN_ON', {tab: tab, method: 'startOnTab'});
     },
 
     disableTab: function(tab) {
       this.tabEnabled[tab.id] = false;
-      MessageProcessor.sendToActiveTab('CM_TURN_OFF', {tab: tab, method: 'stopOnTab'});
+      this.messageProcessor.sendToActiveTab('CM_TURN_OFF', {tab: tab, method: 'stopOnTab'});
     }
   };
 

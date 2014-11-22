@@ -1,4 +1,4 @@
-define('ContentApp', ['Page', 'Log'], function (Page, Log) {
+define('ContentApp', ['Page', 'MessageProcessor','Log'], function (Page, MessageProcessor, Log) {
 
   var ContentApp = {
     VERSION: '0.1',
@@ -6,8 +6,12 @@ define('ContentApp', ['Page', 'Log'], function (Page, Log) {
     enabled: false,
     page: false,
 
+    messageProcessor: false,
+
     run: function () {
       Log.debug('version = ', this.VERSION);
+
+      this.messageProcessor = new MessageProcessor(this);
     },
 
     startOnTab: function(msg) {
