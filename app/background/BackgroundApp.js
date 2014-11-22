@@ -47,10 +47,16 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
       var self = this;
 
       chrome.tabs.onUpdated.addListener(function (tabId, activeInfo, tab) {
-        self.disableTab(tab);
-        self.changeIconToReal(tab.id);
 
-        self.changeTabBadgeNumber("");
+        Log.d('onUpdated called', activeInfo);
+
+        if (activeInfo.status == 'complete') {
+
+          self.disableTab(tab);
+          self.changeIconToReal(tab.id);
+
+          self.changeTabBadgeNumber("");
+        }
       });
     },
 

@@ -101,6 +101,8 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore'], fu
         disable: function() {
             $('body').off('click', '*');
             $(window).unbind('beforeunload');
+
+            this.askForDownload();
         },
 
         setCurrent: function(element) {
@@ -131,6 +133,36 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore'], fu
 
         sameAsCurrent: function(el) {
             return (this.getCurrent() && this.getCurrent().getId() == el.getId());
+        },
+
+        askForDownload: function() {
+            if (this.countCollectedElements() > 0) {
+                var encodedUri = encodeURI(this.collectedToCSV());
+                var link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "copymaker.csv");
+
+                link.click();
+            }
+        },
+
+        collectedToCSV: function() {
+
+            var data = [];
+            for (var i in this.elements) {
+                var el = this.elements[i];
+                var pair = [el.initialHTML, el.currentHTML];
+
+                data.push(pair);
+            }
+            var csvContent = "data:text/csv;charset=utf-8,";
+            data.forEach(function(infoArray, index){
+
+                var dataString = infoArray.join(",");
+                csvContent += index < infoArray.length ? dataString+ "\n" : dataString;
+
+            });
+            return csvContent;
         }
     };
     return Page;
