@@ -8,11 +8,15 @@
     "default_icon": "img/icon.png"
   },
   "background":{
-    "scripts": ["app/background.js"]
+    "scripts": [
+      "lib/vendor/requirejs/require.js",
+      "lib/require-cs.js",
+      "app/background.js"
+    ]
   },
   "permissions": [ "<all_urls>" ],
   "web_accessible_resources": [ "app/*",  "lib/*", "html/*", "css/*", "img/*" ],
-  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
   "content_scripts": [
     {
@@ -20,7 +24,7 @@
       "js": [
         "lib/vendor/requirejs/require.js",
         "lib/require-cs.js",
-        "app/main.js"
+        "app/content.js"
       ]
     }
   ]

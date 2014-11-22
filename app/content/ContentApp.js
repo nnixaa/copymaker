@@ -1,6 +1,6 @@
-define('App', ['Page', 'Log'], function (Page, Log) {
+define('ContentApp', ['Page', 'Log'], function (Page, Log) {
 
-  var App = {
+  var ContentApp = {
     VERSION: '0.1',
 
     enabled: false,
@@ -27,5 +27,5 @@ define('App', ['Page', 'Log'], function (Page, Log) {
     }
   };
 
-  return App;
+  return ContentApp;
 });

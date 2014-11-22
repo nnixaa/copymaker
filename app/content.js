@@ -4,9 +4,11 @@
         baseUrl: chrome.extension.getURL("/"),
 
         paths: {
-            BackgroundApp: 'app/background/BackgroundApp',
+            ContentApp: 'app/content/ContentApp',
             MessageProcessor: 'app/util/MessageProcessor',
             Log: 'app/util/Log',
+            Element: 'app/content/Element',
+            Page: 'app/content/Page',
             jquery: 'lib/vendor/jquery/jquery',
             underscore: 'lib/vendor/lodash/dist/lodash'
         },
@@ -18,11 +20,13 @@
     });
 })();
 
-require(['BackgroundApp', 'Log', 'MessageProcessor'], function(BackgroundApp, Log, MessageProcessor) {
+require(['ContentApp', 'Log', 'MessageProcessor'], function(ContentApp, Log, MessageProcessor) {
 
     Log.on();
-    Log.debug('BackgroundApp loaded');
+    Log.debug('ContentApp loaded');
 
-    BackgroundApp.run();
+    ContentApp.run();
+
+    MessageProcessor.create(ContentApp);
 
 });
