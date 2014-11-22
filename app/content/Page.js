@@ -21,7 +21,11 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore'], fu
         collectElement: function(el) {
             this.elements[el.id] = el;
 
-            this.messageProcessor.sendToRuntime('CM_UPDATE_BADGE', {count: this.countCollectedElements(), method: 'updateTabBadge'});
+            this.messageProcessor.sendToRuntime('CM_UPDATE_BADGE', {
+                count: this.countCollectedElements(),
+                method: 'updateTabBadge',
+                tabId: this.getId()
+            });
         },
 
         countCollectedElements: function() {

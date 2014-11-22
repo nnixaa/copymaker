@@ -33,6 +33,13 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
 
       chrome.tabs.onActivated.addListener(function (activeInfo) {
         self.changeIconToReal(activeInfo.tabId);
+
+        var tab = self.getTab(activeInfo.tabId);
+        if (tab) {
+          self.changeTabBadgeNumber(tab.count);
+        } else {
+          self.changeTabBadgeNumber("");
+        }
       });
     },
 
@@ -42,6 +49,8 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
       chrome.tabs.onUpdated.addListener(function (tabId, activeInfo, tab) {
         self.disableTab(tab);
         self.changeIconToReal(tab.id);
+
+        self.changeTabBadgeNumber("");
       });
     },
 
@@ -83,7 +92,8 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
     },
 
     getTabOrAdd: function(tab, enable) {
-      if (typeof this.tabs[tab.id] == 'undefined' || this.tabs[tab.id] == null) {
+
+      if (!this.getTab(tab.id)) {
         this.tabs[tab.id] = {
           count: 0,
           tab: tab
@@ -91,11 +101,20 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
       }
       this.tabs[tab.id].enable = enable;
 
-      return this.tabs[tab.id];
+      return this.getTab(tab.id);
+    },
+
+    getTab: function(id) {
+      return this.tabs[id];
     },
 
     updateTabBadge: function(msg) {
-      chrome.browserAction.setBadgeText({text: msg.count + ""});
+      this.getTab(msg.tabId).count = msg.count;
+      this.changeTabBadgeNumber(msg.count);
+    },
+
+    changeTabBadgeNumber: function(count) {
+      chrome.browserAction.setBadgeText({text: count + ""});
     }
 
   };
