@@ -1,4 +1,4 @@
-define('Page', ['Element', 'Log', 'jquery', 'underscore'], function (Element, Log, jquery, _) {
+define('Page', ['Element', 'Log', 'jquery', 'underscore'], function (Element, Log, $, _) {
 
     function Page (id, url, title) {
         this.id = id;
@@ -20,68 +20,75 @@ define('Page', ['Element', 'Log', 'jquery', 'underscore'], function (Element, Lo
             this.elements[el.id] = el;
         },
 
-        hasElements: function() {
+        countCollectedElements: function() {
             return Object.keys(this.elements).length;
+        },
+
+        hasElements: function() {
+            return this.countCollectedElements()
         },
 
         enable: function() {
             var self = this;
 
+            self.addOnClick();
+            self.addKeyEvent();
+            self.addBeforeUnload();
+
+
+        },
+
+        addBeforeUnload: function() {
+            var self = this;
+
+            $(window).bind('beforeunload', function() {
+                if (self.hasElements()) {
+                    return 'You are in Editing Mode currently, edited ' + self.countCollectedElements() + ' phrase(s)';
+                }
+            });
+        },
+
+        addKeyEvent: function() {
+            var self = this;
+
+            $(document).keydown(function(e) {
+                if (self.getCurrent()) {
+                    if (e.keyCode == 13) {
+                        self.stopCurrent();
+                        return false;
+                    }
+                    if (e.keyCode == 27) {
+                        self.current.revertHtml();
+                        self.stopCurrent();
+                        return false;
+                    }
+                }
+            });
+        },
+
+        addOnClick: function() {
+            var self = this;
+
             $('body').on('click', '*', function() {
-                // create element around html one
+
                 var el = new Element(this);
 
-                // double click in the same element
-                if(self.current && el.getId() == self.current.getId()) {
+                if(self.sameAsCurrent(el)) {
                     el.focus();
                     return false;
                 }
 
-                // if something is edit mode - turn it off
-                if (self.current) {
-                    self.current.stopEditing();
-                    self.current = null;
-                } else {
+                if (!self.getCurrent() && el.isEditable()) {
 
-                    if (el.isEditable()) {
+                    self.startCurrent(el);
 
-                        self.current = el;
-                        el.startEditing();
-                        el.focus();
-                        $(this).blur(function() {
-                            Log.debug('case four');
-                            el.stopEditing();
-                            if (el.hasChangedHtml()) {
-                                self.collectElement(el);
-                            }
-                            self.current = null;
-                            return false;
-                        });
-                    }
+                    $(this).blur(function() {
+
+                        self.stopCurrent();
+                        $(this).unbind('blur');
+                    });
                 }
                 return false;
-            });
-            $(document).keydown(function(e) {
-                if (self.current) {
-                    if (e.keyCode == 13) {
-                        self.current.stopEditing();
-                        self.current = null;
-                        return false;
-                    }
-                    if (e.keyCode == 27) {
-                        if (self.current) {
-                            self.current.revertHtml();
-                            self.current.stopEditing();
-                            self.current = null;
-                            return false;
-                        }
-                    }
-                }
-            });
-            $(window).bind('beforeunload', function(){
-                if (self.hasElements()) {
-                    return 'You are in Editing Mode currently.';
-                }
             });
         },
 
@@ -92,6 +99,32 @@ define('Page', ['Element', 'Log', 'jquery', 'underscore'], function (Element, Lo
 
         setCurrent: function(element) {
             this.current = element;
+        },
+
+        getCurrent: function() {
+            return this.current;
+        },
+
+        stopCurrent: function() {
+
+            if (!this.getCurrent()) return false;
+
+            this.getCurrent().stopEditing();
+
+            if (this.getCurrent().hasChangedHtml()) {
+                this.collectElement(this.getCurrent());
+            }
+            this.setCurrent(null);
+        },
+
+        startCurrent: function(el) {
+            this.setCurrent(el);
+            this.getCurrent().startEditing();
+            this.getCurrent().focus();
+        },
+
+        sameAsCurrent: function(el) {
+            return (this.getCurrent() && this.getCurrent().getId() == el.getId());
         }
     };
     return Page;

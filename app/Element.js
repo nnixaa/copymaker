@@ -1,4 +1,4 @@
-define('Element', function (require, jquery) {
+define('Element', ['Log', 'jquery'], function (Log, $) {
 
     function Element (el) {
         this.el = el;

@@ -1,6 +1,6 @@
 define('Log', function () {
 
-    return {
+    var Log = {
         status: false,
         history: [],
 
@@ -22,5 +22,9 @@ define('Log', function () {
                 }
             }
         }
-    }
+    };
+
+    Log.d = Log.debug;
+
+    return Log;
 });
