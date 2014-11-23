@@ -1,7 +1,10 @@
 TODO:
     * DONE - turn off on page reload
     * DONE - ask user is smth if unsaved on page leave
-    * https://github.com/mozilla/localForage
+    * DONE - export to file (?)
+
     * determine real text existence
-    * export to file (?)
+    * improve text determining for a text (if is a text only content - approve)
+    * publish
     * ability to load previous session
+    * https://github.com/mozilla/localForage
