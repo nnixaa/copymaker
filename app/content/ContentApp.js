@@ -32,7 +32,7 @@ define('ContentApp', ['Page', 'MessageProcessor','Log'], function (Page, Message
     getPageOrCreate: function(tab) {
       if (this.page) return this.page;
 
-      return this.page = new Page(tab.id, tab.url, tab.title);
+      return this.page = new Page(tab.id, tab.url, document.title);
     }
   };
 
