@@ -1,8 +1,11 @@
 TODO:
+
     * DONE - turn off on page reload
     * DONE - ask user is smth if unsaved on page leave
     * DONE - export to file (?)
 
+    * trim phrases
+    * remove events from page or freez mode (???)
     * determine real text existence
     * improve text determining for a text (if is a text only content - approve)
     * publish
