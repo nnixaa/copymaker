@@ -1,4 +1,5 @@
-define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore'], function (Element, MessageProcessor, Log, $, _) {
+define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore', 'papaparse'],
+    function (Element, MessageProcessor, Log, $, _) {
 
     function Page (id, url, title) {
         this.id = id;
@@ -138,7 +139,7 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore'], fu
                 var encodedUri = encodeURI(this.collectedToCSV());
                 var link = document.createElement("a");
                 link.setAttribute("href", encodedUri);
-                link.setAttribute("download", "copymaker.csv");
+                link.setAttribute("download", "Copymaker - " + this.title + ".csv");
 
                 link.click();
             }
@@ -154,13 +155,7 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore'], fu
                 data.push(pair);
             }
             var csvContent = "data:text/csv;charset=utf-8,";
-            data.forEach(function(infoArray, index){
-
-                var dataString = infoArray.join(",");
-                csvContent += index < infoArray.length ? dataString+ "\n" : dataString;
-
-            });
-            return csvContent;
+            return csvContent + Papa.unparse(data);
         }
     };
     return Page;

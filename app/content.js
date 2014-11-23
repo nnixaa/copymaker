@@ -4,13 +4,14 @@
         baseUrl: chrome.extension.getURL("/"),
 
         paths: {
+            jquery: 'lib/vendor/jquery/jquery',
+            papaparse: 'lib/papaparse/papaparse',
+            underscore: 'lib/vendor/lodash/dist/lodash',
             ContentApp: 'app/content/ContentApp',
             MessageProcessor: 'app/util/MessageProcessor',
             Log: 'app/util/Log',
             Element: 'app/content/Element',
-            Page: 'app/content/Page',
-            jquery: 'lib/vendor/jquery/jquery',
-            underscore: 'lib/vendor/lodash/dist/lodash'
+            Page: 'app/content/Page'
         },
         shim: {
             underscore: {

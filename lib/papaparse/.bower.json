@@ -1,0 +1,50 @@
+{
+  "name": "Papa-Parse",
+  "version": "4.0.5",
+  "main": "papaparse.js",
+  "homepage": "http://papaparse.com",
+  "authors": [
+    "Matthew Holt"
+  ],
+  "description": "Fast and powerful CSV (delimited text) parser for the browser that converts CSV to JSON and JSON to CSV. Supports web workers and streaming large files.",
+  "keywords": [
+    "csv",
+    "parse",
+    "parsing",
+    "parser",
+    "delimited",
+    "text",
+    "data",
+    "auto-detect",
+    "comma",
+    "tab",
+    "pipe",
+    "file",
+    "filereader",
+    "stream",
+    "worker",
+    "workers",
+    "ajax",
+    "thread",
+    "threading",
+    "multi-threaded"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "player"
+  ],
+  "_release": "4.0.5",
+  "_resolution": {
+    "type": "version",
+    "tag": "4.0.5",
+    "commit": "cdb28d52ce7067e74321c9cf277feb7eb258a105"
+  },
+  "_source": "git://github.com/mholt/PapaParse.git",
+  "_target": "4.0.5",
+  "_originalSource": "papaparse"
+}
