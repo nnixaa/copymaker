@@ -29,8 +29,10 @@ require(['jquery'], function($) {
 
         $('#export').click(function() {
             if (!$(this).hasClass('disabled')) {
-                console.log(window.ContentApp);
-                window.close();
+                chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+                    chrome.extension.getBackgroundPage().BackgroundApp.askForExport(tabs[0]);
+                    window.close();
+                });
             }
         });
 

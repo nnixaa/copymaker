@@ -88,6 +88,10 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
       this.messageProcessor.sendToActiveTab('CM_TURN_OFF', {tab: tab, method: 'stopOnTab'});
     },
 
+    askForExport: function(tab) {
+      this.messageProcessor.sendToActiveTab('CM_EXPORT', {tab: tab, method: 'askForExport'});
+    },
+
     getTabOrAdd: function(tab, enable) {
 
       if (!this.getTab(tab.id)) {

@@ -24,6 +24,11 @@ define('ContentApp', ['Page', 'MessageProcessor','Log'], function (Page, Message
       page.disable();
     },
 
+    askForExport: function(msg) {
+      var page = this.getPageOrCreate(msg.tab);
+      page.askForExport();
+    },
+
     getPageOrCreate: function(tab) {
       if (this.page) return this.page;
 

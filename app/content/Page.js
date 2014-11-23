@@ -133,7 +133,7 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore'], fu
             return (this.getCurrent() && this.getCurrent().getId() == el.getId());
         },
 
-        askForDownload: function() {
+        askForExport: function() {
             if (this.countCollectedElements() > 0) {
                 var encodedUri = encodeURI(this.collectedToCSV());
                 var link = document.createElement("a");
