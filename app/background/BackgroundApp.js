@@ -15,17 +15,8 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
 
       this.messageProcessor = new MessageProcessor(this);
 
-      this.addOnClick();
       this.addOnTabChange();
       this.addOnTabUpdated();
-    },
-
-    addOnClick: function() {
-      var self = this;
-
-      chrome.browserAction.onClicked.addListener(function (tab) {
-        self.enableDisableTab(tab);
-      });
     },
 
     addOnTabChange: function() {
@@ -54,7 +45,7 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
 
           self.disableTab(tab);
           self.changeIconToReal(tab.id);
-
+          self.getTab(tab.id).count = 0;
           self.changeTabBadgeNumber("");
         }
       });

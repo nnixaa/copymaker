@@ -24,5 +24,5 @@ require(['BackgroundApp', 'Log'], function(BackgroundApp, Log) {
     Log.debug('BackgroundApp loaded');
 
     BackgroundApp.run();
-
+    window.BackgroundApp = BackgroundApp;
 });

@@ -26,5 +26,5 @@ require(['ContentApp', 'Log'], function(ContentApp, Log) {
     Log.debug('ContentApp loaded');
 
     ContentApp.run();
-
+    window.ContentApp = ContentApp;
 });

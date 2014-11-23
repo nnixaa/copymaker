@@ -101,8 +101,6 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore'], fu
         disable: function() {
             $('body').off('click', '*');
             $(window).unbind('beforeunload');
-
-            this.askForDownload();
         },
 
         setCurrent: function(element) {
