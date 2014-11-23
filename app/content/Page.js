@@ -139,7 +139,7 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore', 'pa
                 var encodedUri = encodeURI(this.collectedToCSV());
                 var link = document.createElement("a");
                 link.setAttribute("href", encodedUri);
-                link.setAttribute("download", "Copymaker - " + this.title + ".csv");
+                link.setAttribute("download", "Copymaker - " + this.getTitle() + ".csv");
 
                 link.click();
             }
@@ -156,6 +156,10 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore', 'pa
             }
             var csvContent = "data:text/csv;charset=utf-8,";
             return csvContent + Papa.unparse(data);
+        },
+
+        getTitle: function() {
+            return this.title ? this.title : 'Untitled';
         }
     };
     return Page;
