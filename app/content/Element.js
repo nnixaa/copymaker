@@ -92,12 +92,12 @@ define('Element', ['Log', 'jquery'], function (Log, $) {
         },
 
         getText: function() {
-            return $(this.el)
+            return $.trim($(this.el)
                 .clone()    //clone the element
                 .children() //select all the children
                 .remove()   //remove all the children
                 .end()  //again go back to selected element
-                .text();
+                .text());
         }
     };
     return Element;
