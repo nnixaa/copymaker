@@ -42,10 +42,10 @@ require(['jquery'], function($) {
                 $('#start-stop').addClass('active');
             }
 
-            var wordsCount = chrome.extension.getBackgroundPage().BackgroundApp.getTab(tabs[0].id).count;
-            if (wordsCount > 0) {
+            var tab = chrome.extension.getBackgroundPage().BackgroundApp.getTab(tabs[0].id);
+            if (tab && tab.count > 0) {
                 $('#export').removeClass('disabled');
-                $('#export').text('Export to CSV (' + wordsCount + ')');
+                $('#export').text('Export to CSV (' + tab.count + ')');
             } else {
                 $('#export').addClass('disabled');
             }

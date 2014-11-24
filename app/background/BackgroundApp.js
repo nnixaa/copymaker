@@ -41,7 +41,7 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
 
         Log.d('onUpdated called', activeInfo);
 
-        if (activeInfo.status == 'complete') {
+        if (activeInfo.status == 'complete' &&  typeof activeInfo.url == 'undefined') {
 
           self.disableTab(tab);
           self.changeIconToReal(tab.id);
