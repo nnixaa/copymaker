@@ -39,9 +39,8 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
 
       chrome.tabs.onUpdated.addListener(function (tabId, activeInfo, tab) {
 
-        Log.d('onUpdated called', activeInfo);
-
-        if (activeInfo.status == 'complete' &&  typeof activeInfo.url == 'undefined') {
+        if (activeInfo.status == 'complete' &&  tab.active == true && typeof activeInfo.url == 'undefined' && typeof tab.openerTabId == 'undefined') {
+          Log.d('onUpdated called', activeInfo, tab);
 
           self.disableTab(tab);
           self.changeIconToReal(tab.id);
