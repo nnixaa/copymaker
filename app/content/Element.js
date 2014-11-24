@@ -35,7 +35,7 @@ define('Element', ['Log', 'jquery'], function (Log, $) {
         },
 
         isEditable: function() {
-            return $(this.el).text().length > 0;
+            return $(this.el).children().length == 0 && $(this.el).text().trim().length > 0;
         },
 
         startEditing: function() {

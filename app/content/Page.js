@@ -78,7 +78,6 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore', 'pa
 
             $('body').on('click', '*', function() {
 
-
                 if(self.sameAsCurrent(this)) {
                     self.getCurrent().focus();
                     return false;
