@@ -164,7 +164,7 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore', 'pa
 
                 data.push(pair);
             }
-            var csvContent = "data:text/csv;charset=utf-8,";
+            var csvContent = "data:text/csv;charset=utf-8,\uFEFF";
             return csvContent + Papa.unparse(data);
         },
 

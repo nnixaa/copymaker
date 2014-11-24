@@ -25,7 +25,6 @@ define('Element', ['Log', 'jquery'], function (Log, $) {
         }
 
         $(this.el).data('cm-element-id', this.id);
-        Log.d($(this.el).data('cm-element-id'));
     }
 
     Element.prototype = {
