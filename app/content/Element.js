@@ -9,7 +9,7 @@ define('Element', ['Log', 'jquery'], function (Log, $) {
         this.shadow = $(this.el).css('box-shadow');
         this.outline = $(this.el).css('outline');
 
-        this.initialHTML = this.currentHTML = this.previousHTML = $(this.el).html();
+        this.initialText = this.currentText = this.previousText = this.getText();
 
         this.editableBorder = '1px dashed #8e0000';
         this.editableOutline = 'none';
@@ -25,16 +25,21 @@ define('Element', ['Log', 'jquery'], function (Log, $) {
         }
 
         $(this.el).data('cm-element-id', this.id);
+        Log.d($(this.el).data('cm-element-id'));
     }
 
     Element.prototype = {
+
+        isTheSame: function(el) {
+            return $(el).data('cm-element-id') == this.getId();
+        },
 
         isEditable: function() {
             return $(this.el).text().length > 0;
         },
 
         startEditing: function() {
-            this.previousHTML = $(this.el).html();
+            this.previousText = this.getText();
 
             $(this.el).data('cm-editable', true);
             this.makeEditStyle();
@@ -42,7 +47,7 @@ define('Element', ['Log', 'jquery'], function (Log, $) {
         },
 
         stopEditing: function() {
-            this.currentHTML = $(this.el).html();
+            this.currentText = this.getText();
 
             $(this.el).data('cm-editable', false);
             this.revertStyle();
@@ -80,11 +85,20 @@ define('Element', ['Log', 'jquery'], function (Log, $) {
         },
 
         revertHtml: function() {
-            $(this.el).html(this.previousHTML);
+            $(this.el).text(this.previousText);
         },
 
         hasChangedHtml: function() {
-           return this.currentHTML != this.previousHTML;
+           return this.currentText != this.previousText;
+        },
+
+        getText: function() {
+            return $(this.el)
+                .clone()    //clone the element
+                .children() //select all the children
+                .remove()   //remove all the children
+                .end()  //again go back to selected element
+                .text();
         }
     };
     return Element;

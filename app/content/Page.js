@@ -78,12 +78,13 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore', 'pa
 
             $('body').on('click', '*', function() {
 
-                var el = new Element(this);
 
-                if(self.sameAsCurrent(el)) {
-                    el.focus();
+                if(self.sameAsCurrent(this)) {
+                    self.getCurrent().focus();
                     return false;
                 }
+                // if this element was previously collected, then get him
+                var el = self.getOrCreateElement(this);
 
                 if (!self.getCurrent() && el.isEditable()) {
 
@@ -130,8 +131,18 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore', 'pa
             this.getCurrent().focus();
         },
 
-        sameAsCurrent: function(el) {
-            return (this.getCurrent() && this.getCurrent().getId() == el.getId());
+        sameAsCurrent: function(htmlEl) {
+            return (this.getCurrent() && this.getCurrent().isTheSame(htmlEl));
+        },
+
+        getOrCreateElement: function(htmlEL) {
+            // TODO: not the best way, because cm-element-id should be internal for Element class
+            var el = this.elements[$(htmlEL).data('cm-element-id')];
+            if (typeof el !== 'undefined' && el != null) {
+                return el;
+            }
+
+            return new Element(htmlEL);
         },
 
         askForExport: function() {
@@ -150,7 +161,7 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore', 'pa
             var data = [];
             for (var i in this.elements) {
                 var el = this.elements[i];
-                var pair = [el.initialHTML, el.currentHTML];
+                var pair = [el.initialText, el.currentText];
 
                 data.push(pair);
             }
