@@ -21,7 +21,7 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
 
     addOnTabChange: function() {
       var self = this;
-
+      // TODO: duplicate!!
       chrome.tabs.onActivated.addListener(function (activeInfo) {
         self.changeIconToReal(activeInfo.tabId);
 
@@ -31,6 +31,22 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
         } else {
           self.changeTabBadgeNumber("");
         }
+      });
+
+      chrome.windows.onFocusChanged.addListener(function () {
+
+        chrome.tabs.query({currentWindow: true, active: true}, function(tab) {
+          Log.d('onFocusChanged called');
+
+          self.changeIconToReal(tab.id);
+
+          var tab = self.getTab(tab.tabId);
+          if (tab) {
+            self.changeTabBadgeNumber(tab.count);
+          } else {
+            self.changeTabBadgeNumber("");
+          }
+        });
       });
     },
 
