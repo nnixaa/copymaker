@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Copymaker",
-  "description": "Copymaker description.",
+  "description": "Copymaker - inline website copywriting and translation.",
   "version": "0.1",
   "icons": {
     "16": "img/icon.png",
