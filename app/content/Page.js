@@ -39,10 +39,17 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore', 'pa
 
         enable: function() {
             var self = this;
-
+            self.prepare();
             self.addOnClick();
             self.addKeyEvent();
             self.addBeforeUnload();
+        },
+
+        disable: function() {
+            var self = this;
+            self.unPrepare();
+            $('body').off('click', '*');
+            $(window).unbind('beforeunload');
         },
 
         addBeforeUnload: function() {
@@ -99,11 +106,6 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore', 'pa
             });
         },
 
-        disable: function() {
-            $('body').off('click', '*');
-            $(window).unbind('beforeunload');
-        },
-
         setCurrent: function(element) {
             this.current = element;
         },
@@ -153,6 +155,29 @@ define('Page', ['Element', 'MessageProcessor','Log', 'jquery', 'underscore', 'pa
 
                 link.click();
             }
+        },
+
+        prepare: function() {
+            (function (count) {
+                'use strict';
+                (function wrap(el) {
+                    $(el).filter(':not(script, iframe)').contents().each(function () {
+                        if (this.nodeType === Node.ELEMENT_NODE) {
+                            wrap(this);
+                        } else if (this.nodeType === Node.TEXT_NODE && !this.nodeValue.match(/^\s+$/m)) {
+                            if ($(this).next().length > 0 || $(this).prev().length > 0) {
+                                $(this).replaceWith($('<cm>', {class: 'cm-remove-after-editing', text:  $(this).text()}).get());
+                            }
+                        }
+                    });
+                }('body'));
+            }(0));
+        },
+
+        unPrepare: function() {
+            $('cm').each(function () {
+                $(this).replaceWith($(this).text());
+            });
         },
 
         collectedToCSV: function() {
