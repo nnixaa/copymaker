@@ -3,7 +3,7 @@
 
   "name": "Copymaker",
   "description": "Copymaker - inline website copywriting and translation.",
-  "version": "0.3",
+  "version": "0.4",
   "icons": {
     "16": "img/icon16.png",
     "48": "img/icon.png",
