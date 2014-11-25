@@ -6,8 +6,8 @@ TODO:
     * DONE improve text determining for a text (if it's a text only content - approve)
     * DONE- trim phrases
     * DONE publish
+    * DONE - on focus change issue
 
-    * on focus change issue
     * determine real text existence
     * remove events from page or freeze mode (???)
     * ability to load previous session

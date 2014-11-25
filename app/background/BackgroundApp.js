@@ -35,12 +35,12 @@ define('BackgroundApp', ['MessageProcessor', 'Log'], function (MessageProcessor,
 
       chrome.windows.onFocusChanged.addListener(function () {
 
-        chrome.tabs.query({currentWindow: true, active: true}, function(tab) {
-          Log.d('onFocusChanged called');
+        chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
+          Log.d('onFocusChanged called', tabs[0]);
 
-          self.changeIconToReal(tab.id);
+          self.changeIconToReal(tabs[0].id);
 
-          var tab = self.getTab(tab.tabId);
+          var tab = self.getTab(tabs[0].id);
           if (tab) {
             self.changeTabBadgeNumber(tab.count);
           } else {
