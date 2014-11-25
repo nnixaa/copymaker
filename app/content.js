@@ -19,12 +19,12 @@
             }
         }
     });
+
+    require(['ContentApp', 'Log'], function(ContentApp, Log) {
+
+        Log.on();
+        Log.debug('ContentApp loaded');
+
+        ContentApp.run();
+    });
 })();
-
-require(['ContentApp', 'Log'], function(ContentApp, Log) {
-
-    Log.on();
-    Log.debug('ContentApp loaded');
-
-    ContentApp.run();
-});

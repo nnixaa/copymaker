@@ -32,7 +32,8 @@
         "lib/vendor/requirejs/require.js",
         "lib/require-cs.js",
         "app/content.js"
-      ]
+      ],
+      "run_at": "document_end"
     }
   ]
 }

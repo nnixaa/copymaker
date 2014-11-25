@@ -16,13 +16,13 @@
             }
         }
     });
+
+    require(['BackgroundApp', 'Log'], function(BackgroundApp, Log) {
+
+        Log.on();
+        Log.debug('BackgroundApp loaded');
+
+        BackgroundApp.run();
+        window.BackgroundApp = BackgroundApp;
+    });
 })();
-
-require(['BackgroundApp', 'Log'], function(BackgroundApp, Log) {
-
-    Log.on();
-    Log.debug('BackgroundApp loaded');
-
-    BackgroundApp.run();
-    window.BackgroundApp = BackgroundApp;
-});
